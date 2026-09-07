@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phân Tích Quyết Định Ký Hợp Đồng Mới</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         /* =========================================
-           1. CÀI ĐẶT CHUNG (GLOBAL STYLES)
+           1. CÀI ĐẶT CHUNG
            ========================================= */
         * {
             box-sizing: border-box;
@@ -14,131 +18,155 @@
             padding: 0;
         }
 
-        /* Bật tính năng cuộn mượt mà khi click vào menu */
         html {
-            scroll-behavior: smooth; 
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc; /* Màu nền xám nhạt cho toàn trang */
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9; /* Nền xám xanh cực nhạt, chuyên nghiệp */
+            color: #334155;
             line-height: 1.6;
         }
 
-        /* Định dạng các khối nội dung ở giữa trang */
         .container {
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
         }
 
         /* =========================================
-           2. THANH MỤC LỤC (NAVIGATION BAR)
+           2. THANH MỤC LỤC (NAVIGATION)
            ========================================= */
         nav {
-            position: sticky; /* Giúp menu luôn bám dính ở trên cùng */
+            position: sticky;
             top: 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px); /* Hiệu ứng mờ nền */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 1000; /* Đảm bảo menu luôn đè lên các thành phần khác */
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            z-index: 1000;
             display: flex;
             justify-content: center;
             padding: 0 20px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 40px;
         }
 
         .nav-links li {
-            padding: 15px 0;
+            padding: 18px 0;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #64748b;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: all 0.3s ease;
-            padding-bottom: 14px;
-            display: inline-block; 
+            padding-bottom: 16px;
+            position: relative;
+            /* Fix lỗi xuống dòng mobile */
+            display: inline-block;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
-        /* Hiệu ứng khi di chuột hoặc mục đang được chọn */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            background-color: #2563eb;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+
         .nav-links a:hover,
         .nav-links a.active {
             color: #1e3a8a;
-            border-bottom: 3px solid #1e3a8a;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         /* =========================================
-           3. PHẦN MỞ ĐẦU (HERO SECTION - GIỐNG ẢNH BẠN GỬI)
+           3. PHẦN MỞ ĐẦU (HERO SECTION)
            ========================================= */
         #mo-dau {
-            height: 100vh; /* Cao bằng 100% màn hình */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Nền gradient pha màu pastel giống ảnh mẫu */
-            background: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+            background: radial-gradient(circle at top right, #e0e7ff 0%, #f8fafc 100%);
             padding: 20px;
             position: relative;
+            overflow: hidden;
         }
 
         .badge {
-            background-color: white;
-            color: #4f46e5;
-            padding: 8px 20px;
-            border-radius: 30px;
+            background-color: #ffffff;
+            color: #2563eb;
+            padding: 8px 24px;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+            border: 1px solid #bfdbfe;
         }
 
         #mo-dau h1 {
-            font-size: 3.5rem;
-            color: #111827;
+            font-size: 4rem;
+            color: #0f172a;
             font-weight: 800;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
+            margin-bottom: 20px;
+            letter-spacing: -1.5px;
+            line-height: 1.2;
         }
 
         #mo-dau h2 {
-            font-size: 1.8rem;
-            color: #4f46e5;
-            font-weight: 600;
+            font-size: 1.5rem;
+            color: #3b82f6;
+            font-weight: 500;
             margin-bottom: 40px;
+            max-width: 800px;
         }
 
         .quote-box {
-            max-width: 600px;
+            max-width: 700px;
             font-style: italic;
-            color: #4b5563;
-            font-size: 1.2rem;
-            border-left: 4px solid #8b5cf6;
-            padding-left: 20px;
+            color: #475569;
+            font-size: 1.15rem;
+            background: white;
+            padding: 25px 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-left: 5px solid #2563eb;
             margin-bottom: 60px;
+            position: relative;
         }
 
         .scroll-down {
             position: absolute;
             bottom: 40px;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
             letter-spacing: 2px;
-            color: #6b7280;
+            color: #94a3b8;
             animation: bounce 2s infinite;
         }
 
@@ -149,148 +177,149 @@
         }
 
         /* =========================================
-           4. ĐỊNH DẠNG CÁC PHẦN NỘI DUNG CHÍNH
+           4. TIÊU ĐỀ SECTION
            ========================================= */
         .section-title {
-            font-size: 28px;
-            color: #1e3a8a;
+            font-size: 32px;
+            color: #0f172a;
             font-weight: 800;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             text-align: center;
-            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background-color: #e53e3e;
-            margin: 15px auto 0;
-            border-radius: 2px;
+        .section-title span {
+            color: #2563eb;
         }
 
         /* =========================================
-           5. CSS CHO CÁC THẺ DỮ LIỆU (Giữ nguyên của bạn + tinh chỉnh)
+           5. THẺ THÔNG TIN (INFO CARDS)
            ========================================= */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 40px;
         }
 
         .info-card {
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            transition: transform 0.3s;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            transition: all 0.4s ease;
         }
 
         .info-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.06);
         }
 
         .info-card h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #1e293b;
-            margin-bottom: 20px;
-            border-bottom: 2px dashed #cbd5e1;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             text-align: center;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .data-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
         }
 
         .data-item {
             background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #3182ce;
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
         }
         
         .data-item.full-width {
             grid-column: span 2;
-            border-left-color: #8b5cf6;
-            background-color: #f5f3ff;
+            border-left-color: #6366f1;
+            background-color: #eef2ff;
         }
 
-        .data-label { font-size: 14px; color: #64748b; margin-bottom: 5px; }
-        .data-value { font-size: 18px; font-weight: 700; color: #0f172a; }
+        .data-label { font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .data-value { font-size: 18px; font-weight: 800; color: #0f172a; }
 
+        /* Card nổi bật (Đơn hàng mới) */
         .highlight-card {
-            border: 2px solid #22c55e;
+            border: 1px solid #bbf7d0;
             background-color: #f0fdf4;
+            position: relative;
         }
-        .highlight-card h3 { color: #166534; border-bottom-color: #bbf7d0; }
-        .highlight-card .data-item { border-left-color: #22c55e; background: white;}
+        .highlight-card h3 { color: #166534; border-bottom-color: #dcfce7; }
+        .highlight-card .data-item { border-left-color: #22c55e; background: #ffffff; }
 
         .profit-highlight {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            background: linear-gradient(135deg, #16a34a, #15803d);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 22px;
+            border-radius: 14px;
             text-align: center;
-            margin-top: 20px;
-            font-size: 22px;
-            font-weight: 700;
-            box-shadow: 0 8px 15px rgba(34, 197, 94, 0.2);
+            margin-top: 25px;
+            font-size: 24px;
+            font-weight: 800;
+            box-shadow: 0 10px 20px rgba(22, 163, 74, 0.2);
         }
         .profit-highlight span {
-            display: block; font-size: 14px; font-weight: 400; opacity: 0.9; margin-bottom: 5px;
+            display: block;
+            font-size: 13px; font-weight: 500; opacity: 0.9; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;
         }
 
         /* =========================================
-           6. CSS CHO CÂY QUYẾT ĐỊNH
+           6. CÂY QUYẾT ĐỊNH
            ========================================= */
-        .tree-container {
+        #cay-quyet-dinh {
             background-color: #ffffff;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            padding: 40px 20px;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tree-container {
+            background-color: #f8fafc;
+            border-radius: 24px;
+            padding: 60px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
 
         .tree-root {
-            background-color: #dbeafe;
-            border: 2px solid #93c5fd;
-            padding: 15px 40px;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #1e3a8a;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 18px 45px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
             position: relative;
             z-index: 5;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 25px rgba(30, 41, 59, 0.15);
         }
 
         .tree-branches {
             display: flex;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             justify-content: space-between;
             position: relative;
+            /* Fix lỗi đường kéo dài */
             align-items: flex-start;
         }
 
-        /* Đường kẻ ngang nối 2 nhánh */
         .tree-branches::before {
             content: '';
             position: absolute;
-            top: -40px;
+            top: -60px;
             left: 25%;
             right: 25%;
             height: 2px;
-            background-color: #94a3b8;
+            background-color: #cbd5e1;
             z-index: 1;
         }
 
@@ -302,15 +331,14 @@
             width: 45%;
         }
 
-        /* Đường kẻ dọc cho mỗi nhánh */
         .branch-col::before {
             content: '';
             position: absolute;
-            top: -40px;
+            top: -60px;
             bottom: 20px;
             left: 50%;
             width: 2px;
-            background-color: #94a3b8;
+            background-color: #cbd5e1;
             transform: translateX(-50%);
             z-index: 1;
         }
@@ -319,86 +347,124 @@
             position: relative;
             z-index: 5;
             background: white;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
             margin-bottom: 15px;
             text-align: center;
             font-size: 15px;
             font-weight: 500;
             width: 100%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.3s;
+        }
+
+        .tree-box:hover {
+            transform: translateY(-3px);
         }
 
         .label-chon {
-            background: #64748b; color: white; padding: 4px 20px; border-radius: 20px;
-            font-size: 14px; font-weight: bold; border: none; margin-top: -20px; margin-bottom: 20px;
+            background: #f1f5f9;
+            color: #475569; 
+            padding: 6px 20px; 
+            border-radius: 30px;
+            font-size: 12px; 
+            font-weight: 700; 
+            border: 1px solid #cbd5e1;
+            margin-top: -30px; 
+            margin-bottom: 25px;
             width: auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-ky { background-color: #10b981; color: white; border: 2px solid #059669; font-weight: bold; font-size: 18px;}
-        .btn-khong-ky { background-color: #ef4444; color: white; border: 2px solid #dc2626; font-weight: bold; font-size: 18px;}
+        .btn-ky { background-color: #22c55e; color: white; border: none; font-weight: 800; font-size: 18px; box-shadow: 0 8px 20px rgba(34,197,94,0.2);}
+        .btn-khong-ky { background-color: #ef4444; color: white; border: none; font-weight: 800; font-size: 18px; box-shadow: 0 8px 20px rgba(239,68,68,0.2);}
         
-        .box-highlight-text { color: #10b981; font-weight: bold; }
-        .box-underline { text-decoration: underline; color: #10b981; font-weight: bold; }
+        .box-highlight-text { color: #16a34a; font-weight: 700; }
+        .box-underline { color: #16a34a; font-weight: 800; border-bottom: 2px solid #bbf7d0;}
 
         .btn-nen-ky {
-            background-color: #10b981; color: white; border: 2px solid #059669;
-            font-size: 18px; font-weight: 800; padding: 15px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            margin-top: 10px;
+            background-color: #ecfdf5;
+            color: #059669; 
+            border: 2px dashed #34d399;
+            font-size: 16px; 
+            font-weight: 800; 
+            padding: 18px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin-top: 15px;
         }
 
         /* =========================================
-           7. CSS TỔNG KẾT
+           7. TỔNG KẾT
            ========================================= */
         .summary-box {
             background-color: #fffbeb;
             border: 1px solid #fde68a;
-            border-left: 6px solid #f59e0b;
-            border-radius: 10px;
-            padding: 30px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-box::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, #f59e0b, #fbbf24);
         }
 
         .summary-box h4 {
-            color: #b45309; font-size: 18px; margin-bottom: 15px; text-transform: uppercase;
+            color: #b45309;
+            font-size: 20px; margin-bottom: 25px; font-weight: 800;
         }
 
         .summary-box ul { list-style-type: none; padding-left: 0; }
         .summary-box li {
-            font-size: 16px; color: #334155; margin-bottom: 12px;
-            padding-left: 25px; position: relative; line-height: 1.5;
+            font-size: 16px;
+            color: #334155; margin-bottom: 18px;
+            padding-left: 35px; position: relative; line-height: 1.6;
         }
         .summary-box li::before {
-            content: '✓'; color: #f59e0b; font-weight: bold; font-size: 18px;
+            content: '✦';
+            color: #f59e0b; font-size: 18px;
             position: absolute; left: 0; top: 0;
         }
 
-        /* Responsive cho điện thoại */
+        /* =========================================
+           8. RESPONSIVE
+           ========================================= */
         @media (max-width: 768px) {
-            #mo-dau h1 { font-size: 2.5rem; }
-            .info-grid { grid-template-columns: 1fr; }
-            .nav-links { gap: 15px; }
-            .nav-links a { font-size: 12px; }
+            #mo-dau h1 { font-size: 2.8rem; }
+            #mo-dau h2 { font-size: 1.2rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 30px;}
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 11px; padding-bottom: 10px;}
+            .tree-branches { flex-direction: column; align-items: center; }
+            .tree-branches::before { display: none; }
+            .branch-col { width: 100%; margin-bottom: 40px; }
+            .branch-col::before { display: none; }
+            .label-chon { margin-top: 0; }
+            .tree-container { padding: 40px 15px; }
+            .summary-box { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PHẦN 1: MÀN HÌNH MỞ ĐẦU (HERO) -->
     <header id="mo-dau">
-        <div class="badge">Bài tập nhóm Hệ thống thông tin quản lý L02 - Nhóm Minh Nhật</div>
-        <h1>Khủng Hoảng Hay Cơ Hội?</h1>
+        <div class="badge">Báo Cáo Tình Huống Quản Trị Hệ Thống Thông Tin L02</div>
+        <h1>Khủng Hoảng <br> Hay Cơ Hội?</h1>
         <h2>Phân Tích Quyết Định Nhận Đơn Hàng Mới Tại Công Ty An Điền</h2>
         
         <div class="quote-box">
-            "Quyết định không nằm ở việc doanh thu tăng bao nhiêu, mà nằm ở việc cấu trúc chi phí (Định phí vs Biến phí) cho phép biên lợi nhuận đóng góp an toàn đến mức nào."
+            "Quyết định không nằm ở việc doanh thu tăng bao nhiêu, mà nằm ở việc cấu trúc chi phí cho phép biên lợi nhuận đóng góp an toàn đến mức nào."
         </div>
 
         <div class="scroll-down">
-            Cuộn để khám phá <br><br>
+            Cuộn để phân tích <br><br>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto; display: block;">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <polyline points="19 12 12 19 5 12"></polyline>
@@ -406,7 +472,6 @@
         </div>
     </header>
 
-    <!-- PHẦN 2: THANH MENU ĐIỀU HƯỚNG -->
     <nav>
         <ul class="nav-links">
             <li><a href="#mo-dau" class="nav-item">MỞ ĐẦU</a></li>
@@ -416,74 +481,70 @@
         </ul>
     </nav>
 
-    <!-- PHẦN 3: TÌNH HUỐNG HIỆN TẠI -->
     <section id="tinh-huong">
         <div class="container">
-            <h2 class="section-title">1. Phân Tích Tình Huống Kế Toán</h2>
+            <h2 class="section-title"><span>01.</span> Phân Tích Dữ Liệu Kế Toán</h2>
             
             <div class="info-grid">
-                <!-- Thẻ Thực trạng -->
                 <div class="info-card">
-                    <h3>Thực trạng sản xuất hiện tại<br>(4.000 sp/tháng)</h3>
+                    <h3>Thực trạng sản xuất hiện tại<br><span style="font-size: 14px; font-weight: 500; color: #64748b;">(4.000 sản phẩm / tháng)</span></h3>
                     <div class="data-grid">
                         <div class="data-item">
                             <div class="data-label">Giá thành toàn bộ</div>
-                            <div class="data-value">2,8 tr/sp</div>
+                            <div class="data-value">2,8 triệu VNĐ/sp</div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Biến phí</div>
-                            <div class="data-value">2,0 tr/sp</div>
+                            <div class="data-value">2,0 triệu VNĐ/sp</div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Định phí</div>
-                            <div class="data-value">0,8 tr/sp</div>
+                            <div class="data-value">0,8 triệu VNĐ/sp</div>
                         </div>
                         <div class="data-item full-width">
                             <div class="data-label">Tổng chi phí</div>
-                            <div class="data-value" style="color: #6d28d9;">11,2 Tỷ VNĐ/tháng</div>
+                            <div class="data-value" style="color: #4f46e5;">11,2 tỷ VNĐ / tháng</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Thẻ Đơn hàng mới -->
                 <div class="info-card highlight-card">
-                    <h3>Thông số Đơn hàng mới<br>(1.500 sp/tháng)</h3>
+                    <h3>Thông số Đơn hàng mới<br><span style="font-size: 14px; font-weight: 500; color: #166534;">(1.500 sản phẩm / tháng)</span></h3>
                     <div class="data-grid">
                         <div class="data-item">
                             <div class="data-label">Doanh thu tăng</div>
-                            <div class="data-value" style="color: #16a34a;">+ 3.9 tỷ VNĐ</div>
+                            <div class="data-value" style="color: #16a34a;">+ 3,9 tỷ VNĐ</div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Biến phí tăng</div>
-                            <div class="data-value" style="color: #e11d48;">+ 3.0 tỷ VNĐ</div>
+                            <div class="data-value" style="color: #e11d48;">+ 3,0 tỷ VNĐ</div>
                         </div>
                     </div>
                     
                     <div class="profit-highlight">
-                        <span>Lợi Nhuận Tăng Thêm (Đóng Góp)</span>
-                        📈 + 900 Triệu VNĐ / tháng
+                        <span>Biên Lợi Nhuận Đóng Góp</span>
+                        📈 + 900 triệu VNĐ / tháng
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PHẦN 4: CÂY QUYẾT ĐỊNH -->
-    <section id="cay-quyet-dinh" style="background-color: #f1f5f9;">
+    <section id="cay-quyet-dinh">
         <div class="container">
-            <h2 class="section-title">2. Xây Dựng Cây Quyết Định</h2>
+            <h2 class="section-title"><span>02.</span> Xây Dựng Cây Quyết Định</h2>
             
             <div class="tree-container">
                 <div class="tree-root">QUYẾT ĐỊNH: Có nhận đơn hàng không?</div>
                 
                 <div class="tree-branches">
-                    <!-- Nhánh 1: Ký -->
                     <div class="branch-col">
                         <div class="tree-box label-chon">Lựa chọn 1</div>
                         <div class="tree-box btn-ky">KÝ HỢP ĐỒNG</div>
-                        <div class="tree-box">Sản xuất thêm 1.500 SP/tháng<br>Giá: 2,6 tr/SP</div>
-                        <div class="tree-box">Lợi nhuận <span class="box-highlight-text">TĂNG 900 tr/tháng</span></div>
-                        <div class="tree-box"><span class="box-underline">Tăng 10,8 tỷ</span> đồng/năm</div>
+                        <div class="tree-box">Sản xuất thêm 1.500 SP/tháng<br>Mức giá: 2,6 triệu VNĐ/SP</div>
+                        <div class="tree-box">Lợi nhuận <span class="box-highlight-text">TĂNG 900 triệu/tháng</span></div>
+                        <div class="tree-box"><span class="box-underline">Tăng 10,8 tỷ VNĐ</span> / năm</div>
+                        
                         <div class="tree-box btn-nen-ky">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="20 6 9 17 4 12"></polyline>
@@ -491,55 +552,47 @@
                             KHUYẾN NGHỊ CHỌN
                         </div>
                     </div>
-                    
-                    <!-- Nhánh 2: Không Ký -->
+                   
                     <div class="branch-col">
                         <div class="tree-box label-chon">Lựa chọn 2</div>
                         <div class="tree-box btn-khong-ky">TỪ CHỐI</div>
-                        <div class="tree-box">Tiếp tục bán 4.000 SP/tháng<br>như cũ</div>
-                        <div class="tree-box" style="color: #64748b;">Duy trì mức lợi nhuận hiện tại<br>(Bỏ lỡ cơ hội)</div>
+                        <div class="tree-box">Tiếp tục bán 4.000 SP/tháng<br>như cấu trúc hiện tại</div>
+                        <div class="tree-box" style="color: #64748b;">Duy trì mức lợi nhuận<br>(Bỏ lỡ cơ hội gia tăng)</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PHẦN 5: TỔNG KẾT -->
     <section id="tong-ket">
         <div class="container">
-            <h2 class="section-title">3. Lập Luận & Kết Luận Chính</h2>
+            <h2 class="section-title"><span>03.</span> Lập Luận & Kết Luận Chính</h2>
             
             <div class="summary-box">
                 <h4>Cơ sở ra quyết định</h4>
                 <ul>
-                    <li><strong>Biên lợi nhuận đóng góp dương:</strong> Đơn hàng mới tạo doanh thu 3.9 tỷ và phát sinh biến phí 3 tỷ, đem lại <strong>900 triệu VNĐ</strong> lợi nhuận đóng góp (Contribution Margin) mỗi tháng.</li>
-                    <li><strong>Định phí không đổi:</strong> Doanh nghiệp được giả định còn công suất nhàn rỗi (có thể sản xuất thêm 1.500sp) mà không làm tăng định phí hiện tại (0.8 tr/sp).</li>
-                    <li><strong>Lợi ích ròng:</strong> Toàn bộ 900 triệu VNĐ này sẽ chảy trực tiếp vào lợi nhuận trước thuế của công ty.</li>
-                    <li><strong>Lưu ý quản trị rủi ro:</strong> Quyết định này chỉ đúng nếu việc nhận đơn hàng giá thấp (2.6tr < 2.8tr giá thành toàn bộ) <em>không làm ảnh hưởng</em> đến giá bán của 4.000 sản phẩm đang bán ra thị trường hiện tại, và thực sự không phát sinh thêm định phí.</li>
+                    <li><strong>Biên lợi nhuận đóng góp dương:</strong> Đơn hàng mới tạo doanh thu 3,9 tỷ VNĐ và phát sinh biến phí 3,0 tỷ VNĐ, đem lại <strong>900 triệu VNĐ</strong> lợi nhuận đóng góp mỗi tháng.</li>
+                    <li><strong>Định phí không đổi:</strong> Doanh nghiệp được giả định còn công suất nhàn rỗi (có thể sản xuất thêm 1.500sp) mà không làm tăng định phí hiện tại (0,8 triệu VNĐ/sp).</li>
+                    <li><strong>Lợi ích ròng:</strong> Toàn bộ 900 triệu VNĐ này sẽ đóng góp trực tiếp vào lợi nhuận trước thuế của công ty.</li>
+                    <li><strong>Lưu ý quản trị rủi ro:</strong> Quyết định này chỉ an toàn nếu việc nhận đơn hàng giá thấp (2,6 triệu VNĐ < 2,8 triệu VNĐ giá thành toàn bộ) <em>không làm ảnh hưởng</em> đến giá bán của 4.000 sản phẩm đang lưu hành trên thị trường, và thực sự không phát sinh thêm định phí mới.</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- ĐOẠN JAVASCRIPT NHỎ GIÚP MENU SÁNG LÊN KHI CUỘN ĐẾN PHẦN ĐÓ -->
     <script>
-        // Lấy tất cả các thẻ section và các thẻ link trong menu
         const sections = document.querySelectorAll('section, header');
         const navLinks = document.querySelectorAll('.nav-links a');
 
         window.addEventListener('scroll', () => {
             let current = '';
-
-            // Kiểm tra xem màn hình đang cuộn tới phần nào
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= (sectionTop - 150)) {
                     current = section.getAttribute('id');
                 }
             });
 
-            // Gắn class "active" (chữ xanh, gạch chân) cho menu tương ứng
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href').includes(current)) {
