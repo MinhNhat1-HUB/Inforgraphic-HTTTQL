@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Quyết Định Ký Hợp Đồng Mới (Công Ty An Điền)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            height: auto;
+            background-color: #ffffff;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 25px 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1a365d;
+        }
+
+        .header h1 {
+            color: #1a365d;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            display: flex;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #2b6cb0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background-color: #e53e3e;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        /* Left Column Styles */
+        .info-card {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .info-card h3 {
+            font-size: 16px;
+            color: #334155;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 8px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .data-item {
+            background: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #3182ce;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .data-item.full-width {
+            grid-column: span 2;
+            border-left-color: #e53e3e;
+            background-color: #fff5f5;
+        }
+
+        .data-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .data-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .highlight-card {
+            background-color: #f0fdf4;
+            border: 2px solid #22c55e;
+            position: relative;
+        }
+
+        .highlight-card h3 {
+            color: #166534;
+            border-bottom-color: #bbf7d0;
+        }
+
+        .highlight-card .data-item {
+            border-left-color: #22c55e;
+        }
+
+        .profit-highlight {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .profit-highlight span {
+            display: block;
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Decision Tree Styles */
+        .tree-container {
+            background-color: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 15px 10px 10px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .tree-root {
+            background-color: #dbeafe;
+            border: 1px solid #93c5fd;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #1e3a8a;
+            position: relative;
+            z-index: 5;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tree-branches {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* Connecting Lines */
+        .tree-branches::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: calc(50% - 130px);
+            right: calc(50% - 130px);
+            height: 2px;
+            background-color: #334155;
+            z-index: 1;
+        }
+
+        .branch-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 220px;
+        }
+
+        .branch-col::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            bottom: 20px;
+            left: 50%;
+            width: 2px;
+            background-color: #334155;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .tree-box {
+            position: relative;
+            z-index: 5;
+            background: white;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin-bottom: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .label-chon {
+            background: #94a3b8;
+            color: white;
+            padding: 4px 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            border: none;
+            margin-top: -12px;
+            margin-bottom: 12px;
+        }
+
+        .btn-ky, .btn-khong-ky {
+            font-size: 15px;
+            font-weight: 800;
+            padding: 8px;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .btn-ky {
+            background-color: #10b981;
+            border: 2px solid #059669;
+        }
+
+        .btn-khong-ky {
+            background-color: #ef4444;
+            border: 2px solid #dc2626;
+        }
+        
+        .box-highlight-text {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .box-underline {
+            text-decoration: underline;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .btn-nen-ky {
+            background-color: #10b981;
+            color: white;
+            border: 2px solid #059669;
+            font-size: 16px;
+            font-weight: 800;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .summary-box {
+            background-color: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid #f59e0b;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-top: 5px;
+        }
+
+        .summary-box h4 {
+            color: #b45309;
+            font-size: 14px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .summary-box ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .summary-box li {
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 4px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .summary-box li::before {
+            content: '•';
+            color: #f59e0b;
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide">
+    <div class="header">
+        <h1>PHÂN TÍCH QUYẾT ĐỊNH KÝ HỢP ĐỒNG MỚI (CÔNG TY AN ĐIỀN)</h1>
+    </div>
+
+    <div class="content">
+        <!-- Left Column -->
+        <div class="col">
+            <h2 class="section-title">1. PHÂN TÍCH TÌNH HUỐNG HIỆN TẠI & ĐƠN HÀNG MỚI</h2>
+            
+            <div class="info-card">
+                <h3>Thực trạng sản xuất (4,000 sp/tháng)</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Giá thành toàn bộ</div>
+                        <div class="data-value">2,8 tr/sp</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Biến phí</div>
+                        <div class="data-value">2,0 tr/sp</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Định phí</div>
+                        <div class="data-value">0,8 tr/sp</div>
+                    </div>
+                    <div class="data-item full-width" style="border-left-color: #8b5cf6; background-color: #f5f3ff;">
+                        <div class="data-label">Tổng chi phí</div>
+                        <div class="data-value" style="color: #6d28d9;">11,2 Tỷ VNĐ/tháng</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card highlight-card">
+                <h3>Đơn hàng mới (1,500 sp/tháng)</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Doanh thu tăng</div>
+                        <div class="data-value" style="color: #16a34a;">+ 3.9 tỷ VNĐ</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Biến phí tăng</div>
+                        <div class="data-value" style="color: #e11d48;">+ 3.0 tỷ VNĐ</div>
+                    </div>
+                </div>
+                
+                <div class="profit-highlight">
+                    <span>Lợi Nhuận Tăng Thêm (Đóng Góp)</span>
+                    📈 900 Triệu VNĐ / tháng
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col">
+            <h2 class="section-title">2. XÂY DỰNG & PHÂN TÍCH CÂY QUYẾT ĐỊNH</h2>
+            
+            <div class="tree-container">
+                <div class="tree-root">QUYẾT ĐỊNH Nhận đơn hàng</div>
+                
+                <div class="tree-branches">
+                    <!-- Branch 1: Ký -->
+                    <div class="branch-col">
+                        <div class="tree-box label-chon">Chọn</div>
+                        <div class="tree-box btn-ky">KÝ HỢP ĐỒNG</div>
+                        <div class="tree-box">1.500 SP/tháng × 2,6 tr/SP</div>
+                        <div class="tree-box">Lợi nhuận <span class="box-highlight-text">TĂNG: 900</span> tr/tháng</div>
+                        <div class="tree-box"><span class="box-underline">Tăng 10,8 tỷ</span> đồng/năm</div>
+                        <div class="tree-box btn-nen-ky">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            NÊN KÝ
+                        </div>
+                    </div>
+                    
+                    <!-- Branch 2: Không Ký -->
+                    <div class="branch-col">
+                        <div class="tree-box label-chon">Chọn</div>
+                        <div class="tree-box btn-khong-ky">KHÔNG KÝ</div>
+                        <div class="tree-box">Tiếp tục bán 4.000 SP/tháng</div>
+                        <div class="tree-box">Duy trì lợi nhuận</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h4>Lập Luận Chính</h4>
+                <ul>
+                    <li>Đơn hàng mới tạo doanh thu 3.9 tỷ và biến phí 3 tỷ, đem lại <strong>900 triệu VNĐ</strong> lợi nhuận đóng góp mỗi tháng.</li>
+                    <li>Doanh nghiệp còn công suất dư và định phí không tăng đáng kể.</li>
+                    <li><strong>Lợi ích ròng = +900 Triệu VNĐ/tháng.</strong></li>
+                    <li>Cân nhắc rủi ro tăng định phí/chi phí bổ sung nếu công suất gần tối đa hoặc ảnh hưởng đơn hàng hiện tại.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
