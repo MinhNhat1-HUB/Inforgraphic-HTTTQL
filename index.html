@@ -461,49 +461,7 @@
                     
                     <div class="profit-highlight">
                         <span>Lợi Nhuận Tăng Thêm (Đóng Góp)</span>
-                        📈 + <script>
-    // Hàm tạo hiệu ứng nhảy số chậm dần về cuối (ease-out)
-    function animateValue(obj, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            
-            // Công thức ease-out cubic để tạo cảm giác giống slot machine (chậm dần khi đến đích)
-            const easeOutProgress = 1 - Math.pow(1 - progress, 3);
-            obj.innerHTML = Math.floor(easeOutProgress * (end - start) + start);
-            
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            } else {
-                obj.innerHTML = end; // Chốt số cuối cùng
-            }
-        };
-        window.requestAnimationFrame(step);
-    }
-
-    // Sử dụng IntersectionObserver để kích hoạt hiệu ứng khi cuộn chuột tới vùng chứa số
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counters = entry.target.querySelectorAll('.counter');
-                counters.forEach(counter => {
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    // Đặt lại về 0 trước khi chạy để hiệu ứng lặp lại mỗi khi cuộn qua
-                    counter.innerHTML = '0';
-                    animateValue(counter, 0, target, 2000); // Thời gian chạy là 2000ms (2 giây)
-                });
-            }
-        });
-    }, { threshold: 0.3 }); // Kích hoạt khi 30% phần tử xuất hiện trên màn hình
-
-    // Áp dụng bộ quan sát cho các section chứa class .counter
-    document.querySelectorAll('section').forEach(section => {
-        if(section.querySelector('.counter')) {
-            observer.observe(section);
-        }
-    });
-</script> Triệu VNĐ / tháng
+                        📈 + 900 Triệu VNĐ / tháng
                     </div>
                 </div>
             </div>
